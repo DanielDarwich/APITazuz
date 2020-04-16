@@ -226,30 +226,10 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
-            <a href="#maccabiah-wordpress" class="toc-h1 toc-link" data-title="Maccabiah Wordpress">Maccabiah Wordpress</a>
+            <a href="#tazuz-backend" class="toc-h1 toc-link" data-title="Tazuz Backend">Tazuz Backend</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-posts" class="toc-h2 toc-link" data-title="Get All Posts">Get All Posts</a>
-                  </li>
-                  <li>
-                    <a href="#get-a-specific-post" class="toc-h2 toc-link" data-title="Get a Specific Post">Get a Specific Post</a>
-                  </li>
-                  <li>
-                    <a href="#get-all-tags" class="toc-h2 toc-link" data-title="Get All Tags">Get All Tags</a>
-                  </li>
-                  <li>
-                    <a href="#filter-posts-by-tags" class="toc-h2 toc-link" data-title="Filter Posts by Tags">Filter Posts by Tags</a>
-                  </li>
-                  <li>
-                    <a href="#get-sport-information" class="toc-h2 toc-link" data-title="Get Sport Information">Get Sport Information</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#maccabiah-backend" class="toc-h1 toc-link" data-title="Maccabiah Backend">Maccabiah Backend</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#get-all-countries-data" class="toc-h2 toc-link" data-title="Get All Countries Data">Get All Countries Data</a>
+                    <a href="#get-users" class="toc-h2 toc-link" data-title="Get Users">Get Users</a>
                   </li>
                   <li>
                     <a href="#get-all-country-sports-data" class="toc-h2 toc-link" data-title="Get All Country/Sports Data">Get All Country/Sports Data</a>
@@ -303,7 +283,7 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li>Documentation for <a href='https://macabiadas.mx'>Maccabiah API</a></li>
+            <li>Documentation for <a href='https://tazuz.org'>Tazuz API</a></li>
             <li>Created by Daniel Darwich</li>
             <li>Request a Developer Key with</li>
             <li>ddarwichh@atid.edu.mx</li>
@@ -313,47 +293,38 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Maccabiah API! You can use our API to access all endpoints, which can get information on sports, standings, transportation, and more in our database.</p>
+<p>Welcome to the Tazuz API! You can use our API to access all endpoints, which can get information on sports, standings, transportation, and more in our database.</p>
 
 <p>We have language bindings in C# and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 <h1 id='authentication'>Authentication</h1>
-<p>Maccabiah uses API keys to allow access to the API. You can register a new Maccabiah API key at our <a href="http://macabiadas.mx">developer portal</a>.</p>
+<p>Tazuz uses API keys to allow access to the API. You can register a new Maccabiah API key at our <a href="http://tazuz.org">developer portal</a>.</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>Tazuz expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
 
 <p><code>Authorization: APIKEY</code></p>
 
 <aside class="notice">
 You must replace <code>APIKEY</code> with your personal API key.
 </aside>
-<h1 id='maccabiah-wordpress'>Maccabiah Wordpress</h1><h2 id='get-all-posts'>Get All Posts</h2><pre class="highlight csharp tab-csharp"><code><span class="k">static</span> <span class="n">HttpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
+<h1 id='tazuz-backend'>Tazuz Backend</h1><h2 id='get-users'>Get Users</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">function</span> <span class="nx">GetUsers</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://tazuz-d281a.firebaseio.com/Users.json?auth=1DfXFRPwRe9OveIAnKiZUlzXaYb3rozZyHdD1OLA"</span><span class="p">;</span>
 
-<span class="k">public</span> <span class="n">JArray</span> <span class="nf">GetAllPosts</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">HttpWebRequest</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://macabiadas.mx/wp-json/wp/v2/posts"</span><span class="p">);</span>
-
-    <span class="n">response</span><span class="p">.</span><span class="n">UseDefaultCredentials</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"APIKEY"</span><span class="p">);</span>
-
-    <span class="n">HttpWebResponse</span> <span class="n">answer</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">==</span> <span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Stream</span> <span class="k">value</span> <span class="p">=</span> <span class="n">answer</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">();</span>
-        <span class="n">StreamReader</span> <span class="n">_value</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Api Value Is Null"</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">JArray</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">_value</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">());</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+      <span class="nx">Users</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
 <span class="p">}</span>
 
-<span class="n">JArray</span> <span class="n">data</span> <span class="p">=</span> <span class="nf">GetAllPosts</span><span class="p">();</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="kd">function</span> <span class="nx">Users</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">values</span><span class="p">(</span><span class="nx">object</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nx">GetUsers</span><span class="p">();</span>
 </code></pre>
 <blockquote>
 <p>You must replace <code>APIKEY</code> with your personal API key.</p>
@@ -362,540 +333,16 @@ You must replace <code>APIKEY</code> with your personal API key.
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1943</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-01T19:46:34"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"date_gmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-01T19:46:34"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"guid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/?p=1943"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-06T17:30:41"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"modified_gmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-06T17:30:41"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5-dias-de-tour-en-la-ciudad-de-mexico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"publish"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"post"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/2018/11/01/5-dias-de-tour-en-la-ciudad-de-mexico/"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5 días de tour en la Ciudad de México"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"protected"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-
-  </span><span class="p">{</span><span class="err">...</span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves all posts.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://macabiadas.mx/wp-json/wp/v2/posts</code></p>
-<h3 id='query-headers'>Query Headers</h3>
-<table><thead>
-<tr>
-<th>Header</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Authorization</td>
-<td>null</td>
-<td>You need to insert your APIKEY to get results.</td>
-</tr>
-</tbody></table>
-
-<aside class="warning">
-Remember — an APIKEY is needed to get a return value!
-</aside>
-<h2 id='get-a-specific-post'>Get a Specific Post</h2><pre class="highlight csharp tab-csharp"><code><span class="k">static</span> <span class="n">HttpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
-
-<span class="k">public</span> <span class="n">JObject</span> <span class="nf">GetPost</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">HttpWebRequest</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://macabiadas.mx/wp-json/wp/v2/posts/POSTID"</span><span class="p">);</span>
-
-    <span class="n">response</span><span class="p">.</span><span class="n">UseDefaultCredentials</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"APIKEY"</span><span class="p">);</span>
-
-    <span class="n">HttpWebResponse</span> <span class="n">answer</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">==</span> <span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Stream</span> <span class="k">value</span> <span class="p">=</span> <span class="n">answer</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">();</span>
-        <span class="n">StreamReader</span> <span class="n">_value</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Api Value Is Null"</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">JObject</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">_value</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">());</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">JObject</span> <span class="n">data</span> <span class="p">=</span> <span class="nf">GetPost</span><span class="p">();</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code>
-</code></pre>
-<blockquote>
-<p>You must replace <code>APIKEY</code> with your personal API key.</p>
-
-<p>You must replace <code>POSTID</code> with a specific Post id.</p>
-
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1943</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-01T19:46:34"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"date_gmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-01T19:46:34"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"guid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/?p=1943"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-06T17:30:41"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"modified_gmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-06T17:30:41"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5-dias-de-tour-en-la-ciudad-de-mexico"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"publish"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"post"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/2018/11/01/5-dias-de-tour-en-la-ciudad-de-mexico/"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5 días de tour en la Ciudad de México"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"protected"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"excerpt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"protected"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"featured_media"</span><span class="p">:</span><span class="w"> </span><span class="mi">1605</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"comment_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"ping_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"sticky"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-  </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="mi">29</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="mi">62</span><span class="p">,</span><span class="w">
-    </span><span class="mi">65</span><span class="p">,</span><span class="w">
-    </span><span class="mi">64</span><span class="p">,</span><span class="w">
-    </span><span class="mi">63</span><span class="p">,</span><span class="w">
-    </span><span class="mi">60</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"jetpack_featured_media_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/wp-content/uploads/2018/10/Centro-2.jpg"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/wp-json/wp/v2/posts/1943"</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a specific post.</p>
-
-<aside class="warning">You need to have the specific <code>POSTID</code> in order to make this request.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://macabiadas.mx/wp-json/wp/v2/posts/&lt;POSTID&gt;</code></p>
-<h3 id='query-headers-2'>Query Headers</h3>
-<table><thead>
-<tr>
-<th>Header</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Authorization</td>
-<td>null</td>
-<td>You need to insert your APIKEY to get results.</td>
-</tr>
-</tbody></table>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>POSTID</td>
-<td>Integer</td>
-<td>The ID of the post you want to retrieve.</td>
-</tr>
-</tbody></table>
-<h2 id='get-all-tags'>Get All Tags</h2><pre class="highlight csharp tab-csharp"><code><span class="k">static</span> <span class="n">HttpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
-
-<span class="k">public</span> <span class="n">JArray</span> <span class="nf">GetAllTags</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">HttpWebRequest</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://macabiadas.mx/wp-json/wp/v2/tags"</span><span class="p">);</span>
-
-    <span class="n">response</span><span class="p">.</span><span class="n">UseDefaultCredentials</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"APIKEY"</span><span class="p">);</span>
-
-    <span class="n">HttpWebResponse</span> <span class="n">answer</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">==</span> <span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Stream</span> <span class="k">value</span> <span class="p">=</span> <span class="n">answer</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">();</span>
-        <span class="n">StreamReader</span> <span class="n">_value</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Api Value Is Null"</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">JArray</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">_value</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">());</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">JArray</span> <span class="n">data</span> <span class="p">=</span> <span class="nf">GetAllTags</span><span class="p">();</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code>
-</code></pre>
-<blockquote>
-<p>You must replace <code>APIKEY</code> with your personal API key.</p>
-
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/tag/about/"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"About"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"about"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"taxonomy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"post_tag"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="s2">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="s2">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/wp-json/wp/v2/tags/9"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="err">...</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="err">Age</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="w">
+    </span><span class="err">Name</span><span class="p">:</span><span class="s2">"John Doe"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/tag/agua/"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agua"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agua"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"taxonomy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"post_tag"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="s2">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="s2">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/wp-json/wp/v2/tags/52"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="err">...</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="err">...</span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint gets every available tag.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>GET http://macabiadas.mx/wp-json/wp/v2/tags</code></p>
-<h3 id='query-headers-3'>Query Headers</h3>
-<table><thead>
-<tr>
-<th>Header</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Authorization</td>
-<td>null</td>
-<td>You need to insert your APIKEY to get results.</td>
-</tr>
-</tbody></table>
-<h2 id='filter-posts-by-tags'>Filter Posts by Tags</h2><pre class="highlight csharp tab-csharp"><code><span class="k">static</span> <span class="n">HttpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
-
-<span class="k">public</span> <span class="n">JArray</span> <span class="nf">GetPostsWithTag</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">HttpWebRequest</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://macabiadas.mx/wp-json/wp/v2/posts?tags=TAG"</span><span class="p">);</span>
-
-    <span class="n">response</span><span class="p">.</span><span class="n">UseDefaultCredentials</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"APIKEY"</span><span class="p">);</span>
-
-    <span class="n">HttpWebResponse</span> <span class="n">answer</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">==</span> <span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Stream</span> <span class="k">value</span> <span class="p">=</span> <span class="n">answer</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">();</span>
-        <span class="n">StreamReader</span> <span class="n">_value</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Api Value Is Null"</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">JArray</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">_value</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">());</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">JArray</span> <span class="n">data</span> <span class="p">=</span> <span class="nf">GetPostsWithTag</span><span class="p">();</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code>
-</code></pre>
-<blockquote>
-<p>You must replace <code>APIKEY</code> with your personal API key.</p>
-
-<p>You must replace <code>TAG</code> with a specific Tag id.</p>
-
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1943</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-01T19:46:34"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"date_gmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-01T19:46:34"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"guid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/?p=1943"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-06T17:30:41"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"modified_gmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-06T17:30:41"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5-dias-de-tour-en-la-ciudad-de-mexico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"publish"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"post"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/2018/11/01/5-dias-de-tour-en-la-ciudad-de-mexico/"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5 días de tour en la Ciudad de México"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"protected"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"excerpt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"protected"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"featured_media"</span><span class="p">:</span><span class="w"> </span><span class="mi">1605</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"comment_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"ping_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"sticky"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="mi">29</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="mi">62</span><span class="p">,</span><span class="w">
-      </span><span class="mi">65</span><span class="p">,</span><span class="w">
-      </span><span class="mi">64</span><span class="p">,</span><span class="w">
-      </span><span class="mi">63</span><span class="p">,</span><span class="w">
-      </span><span class="mi">60</span><span class="p">,</span><span class="w">
-      </span><span class="mi">61</span><span class="p">,</span><span class="w">
-      </span><span class="mi">58</span><span class="p">,</span><span class="w">
-      </span><span class="mi">57</span><span class="p">,</span><span class="w">
-      </span><span class="mi">66</span><span class="p">,</span><span class="w">
-      </span><span class="mi">33</span><span class="p">,</span><span class="w">
-      </span><span class="mi">59</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="err">...</span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves all posts with a specific tag/s.</p>
-<h3 id='http-request-4'>HTTP Request</h3>
-<p>To get all available tags go to <a href="http://localhost:4567/?csharp#get-all-tags">Get All Tags</a>.</p>
-
-<p><code>GET http://macabiadas.mx/wp-json/wp/v2/posts?tags=TAG</code></p>
-<h3 id='query-headers-4'>Query Headers</h3>
-<table><thead>
-<tr>
-<th>Header</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Authorization</td>
-<td>null</td>
-<td>You need to insert your APIKEY to get results.</td>
-</tr>
-</tbody></table>
-<h3 id='url-parameters-2'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>TAG</td>
-<td>Integer</td>
-<td>The ID of the tag you want to filter posts by. You can use more than 1 tag by separating them with commas. Example: <code>http://macabiadas.mx/wp-json/wp/v2/posts?tags=62,52</code></td>
-</tr>
-</tbody></table>
-<h2 id='get-sport-information'>Get Sport Information</h2><pre class="highlight csharp tab-csharp"><code><span class="k">static</span> <span class="n">HttpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
-
-<span class="k">public</span> <span class="n">JArray</span> <span class="nf">GetSportInfo</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">HttpWebRequest</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://macabiadas.mx/wp-json/wp/v2/posts?slug=SPORT"</span><span class="p">);</span>
-
-    <span class="n">response</span><span class="p">.</span><span class="n">UseDefaultCredentials</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"APIKEY"</span><span class="p">);</span>
-
-    <span class="n">HttpWebResponse</span> <span class="n">answer</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">==</span> <span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Stream</span> <span class="k">value</span> <span class="p">=</span> <span class="n">answer</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">();</span>
-        <span class="n">StreamReader</span> <span class="n">_value</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Api Value Is Null"</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">JArray</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">_value</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">());</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">JArray</span> <span class="n">data</span> <span class="p">=</span> <span class="nf">GetSportInfo</span><span class="p">();</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code>
-</code></pre>
-<blockquote>
-<p>You must replace <code>APIKEY</code> with your personal API key.</p>
-
-<p>You must replace <code>SPORT</code> with a specific sport name as listed on the left.</p>
-
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1623</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-19T19:52:11"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"date_gmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-19T19:52:11"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"guid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/?p=1623"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-19T19:52:11"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"modified_gmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-19T19:52:11"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"futsal"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"publish"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"post"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://macabiadas.mx/2018/10/19/futsal/"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Futsal"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"protected"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"excerpt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"rendered"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"protected"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"featured_media"</span><span class="p">:</span><span class="w"> </span><span class="mi">1628</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"comment_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"ping_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"sticky"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="mi">18</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="mi">38</span><span class="p">,</span><span class="w">
-      </span><span class="mi">43</span><span class="p">,</span><span class="w">
-      </span><span class="mi">42</span><span class="p">,</span><span class="w">
-      </span><span class="mi">41</span><span class="p">,</span><span class="w">
-      </span><span class="mi">37</span><span class="p">,</span><span class="w">
-      </span><span class="mi">40</span><span class="p">,</span><span class="w">
-      </span><span class="mi">39</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="err">Age</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
+    </span><span class="err">Name</span><span class="p">:</span><span class="s2">"Jane Doe"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a post with information from a specific sport.</p>
-<h3 id='http-request-5'>HTTP Request</h3>
-<p><code>GET http://macabiadas.mx/wp-json/wp/v2/posts?slug=SPORT</code></p>
-<h3 id='query-headers-5'>Query Headers</h3>
-<table><thead>
-<tr>
-<th>Header</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Authorization</td>
-<td>null</td>
-<td>You need to insert your APIKEY to get results.</td>
-</tr>
-</tbody></table>
-<h3 id='url-parameters-3'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>SPORT</td>
-<td>String</td>
-<td>The name of the sport you want information from. Its value can be any of the following: <code>Aguas-Abiertas</code>, <code>Ajedréz</code>, <code>Basquetbol</code>, <code>Ciclismo</code>, <code>Equitación</code>, <code>Fútbol-Soccer</code>, <code>Futsal</code>, <code>Gimnasia-Olímpica</code>, <code>Gimnasia-Ritmica</code>, <code>Golf</code>, <code>Hockey-Pasto</code>, <code>Karate</code>, <code>Macabiman</code>, <code>Triatlón</code>, <code>Medio-Maratón</code>, <code>Natación</code>, <code>Paddel</code>, <code>Squash</code>, <code>Softball</code>, <code>Tenis</code>, <code>Tenis-de-Mesa</code>, <code>Tiro-con-Arco</code>, <code>Voleyball</code>, <code>Voleyball-de-Playa</code>, <code>WaterPolo</code></td>
-</tr>
-</tbody></table>
-<h1 id='maccabiah-backend'>Maccabiah Backend</h1><h2 id='get-all-countries-data'>Get All Countries Data</h2><pre class="highlight csharp tab-csharp"><code><span class="k">static</span> <span class="n">HttpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
 
-<span class="k">public</span> <span class="n">JArray</span> <span class="nf">GetCountriesData</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">HttpWebRequest</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://jmp2019.com/api/v1/countries"</span><span class="p">);</span>
-
-    <span class="n">response</span><span class="p">.</span><span class="n">UseDefaultCredentials</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"APIKEY"</span><span class="p">);</span>
-
-    <span class="n">HttpWebResponse</span> <span class="n">answer</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">==</span> <span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Stream</span> <span class="k">value</span> <span class="p">=</span> <span class="n">answer</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">();</span>
-        <span class="n">StreamReader</span> <span class="n">_value</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Api Value Is Null"</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">JArray</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">_value</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">());</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">JArray</span> <span class="n">data</span> <span class="p">=</span> <span class="nf">GetCountriesData</span><span class="p">();</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code>
-</code></pre>
-<blockquote>
-<p>You must replace <code>APIKEY</code> with your personal API key.</p>
-
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+</span><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
     </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mexico"</span><span class="p">,</span><span class="w">
@@ -910,9 +357,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves information of all countries participating containing the sports they participate in.</p>
-<h3 id='http-request-6'>HTTP Request</h3>
+<h3 id='http-request'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/countries</code></p>
-<h3 id='query-headers-6'>Query Headers</h3>
+<h3 id='query-headers'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1007,9 +454,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves information of all players that participate in each sport for a certain country.</p>
-<h3 id='http-request-7'>HTTP Request</h3>
+<h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/COUNTRY</code></p>
-<h3 id='query-headers-7'>Query Headers</h3>
+<h3 id='query-headers-2'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1023,7 +470,7 @@ Remember — an APIKEY is needed to get a return value!
 <td>You need to insert your APIKEY to get results.</td>
 </tr>
 </tbody></table>
-<h3 id='url-parameters-4'>URL Parameters</h3>
+<h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1088,9 +535,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves information of all sports in the Maccabiah containing the countries that participate in each one and the players that participate in each country.</p>
-<h3 id='http-request-8'>HTTP Request</h3>
+<h3 id='http-request-3'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/sports</code></p>
-<h3 id='query-headers-8'>Query Headers</h3>
+<h3 id='query-headers-3'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1187,9 +634,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves information of all players that participate in each country for a certain sport.</p>
-<h3 id='http-request-9'>HTTP Request</h3>
+<h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/SPORT</code></p>
-<h3 id='query-headers-9'>Query Headers</h3>
+<h3 id='query-headers-4'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1203,7 +650,7 @@ Remember — an APIKEY is needed to get a return value!
 <td>You need to insert your APIKEY to get results.</td>
 </tr>
 </tbody></table>
-<h3 id='url-parameters-5'>URL Parameters</h3>
+<h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1270,9 +717,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves a list of all competitions inside a certain sport.</p>
-<h3 id='http-request-10'>HTTP Request</h3>
+<h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/SPORT/competitions</code></p>
-<h3 id='query-headers-10'>Query Headers</h3>
+<h3 id='query-headers-5'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1286,7 +733,7 @@ Remember — an APIKEY is needed to get a return value!
 <td>You need to insert your APIKEY to get results.</td>
 </tr>
 </tbody></table>
-<h3 id='url-parameters-6'>URL Parameters</h3>
+<h3 id='url-parameters-3'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1404,9 +851,9 @@ Remember — an APIKEY is needed to get a return value!
 </blockquote>
 
 <p>This endpoint retrieves the standings of a specific competition.</p>
-<h3 id='http-request-11'>HTTP Request</h3>
+<h3 id='http-request-6'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/standings/COMPETITION</code></p>
-<h3 id='query-headers-11'>Query Headers</h3>
+<h3 id='query-headers-6'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1420,7 +867,7 @@ Remember — an APIKEY is needed to get a return value!
 <td>You need to insert your APIKEY to get results.</td>
 </tr>
 </tbody></table>
-<h3 id='url-parameters-7'>URL Parameters</h3>
+<h3 id='url-parameters-4'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1500,9 +947,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves the table of all medals earned by each country in the Maccabiah sorted by most gold medals.</p>
-<h3 id='http-request-12'>HTTP Request</h3>
+<h3 id='http-request-7'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/medals</code></p>
-<h3 id='query-headers-12'>Query Headers</h3>
+<h3 id='query-headers-7'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1584,9 +1031,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves the table of all medals earned by each country in the Maccabiah sorted by most gold medals filtered by a specific sport.</p>
-<h3 id='http-request-13'>HTTP Request</h3>
+<h3 id='http-request-8'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/medals/SPORT</code></p>
-<h3 id='query-headers-13'>Query Headers</h3>
+<h3 id='query-headers-8'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1600,7 +1047,7 @@ Remember — an APIKEY is needed to get a return value!
 <td>You need to insert your APIKEY to get results.</td>
 </tr>
 </tbody></table>
-<h3 id='url-parameters-8'>URL Parameters</h3>
+<h3 id='url-parameters-5'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1682,9 +1129,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves the table of all medals earned on different sports by a country in the Maccabiah sorted by most gold medals.</p>
-<h3 id='http-request-14'>HTTP Request</h3>
+<h3 id='http-request-9'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/medals/COUNTRY</code></p>
-<h3 id='query-headers-14'>Query Headers</h3>
+<h3 id='query-headers-9'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1698,7 +1145,7 @@ Remember — an APIKEY is needed to get a return value!
 <td>You need to insert your APIKEY to get results.</td>
 </tr>
 </tbody></table>
-<h3 id='url-parameters-9'>URL Parameters</h3>
+<h3 id='url-parameters-6'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1892,9 +1339,9 @@ Remember — an APIKEY is needed to get a return value!
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves the schedule with events and results of every different sport for a country in the Maccabiah sorted by most gold medals. Events will be ordered chronologically.</p>
-<h3 id='http-request-15'>HTTP Request</h3>
+<h3 id='http-request-10'>HTTP Request</h3>
 <p><code>GET http://jmp2019.com/api/v1/medals/COUNTRY</code></p>
-<h3 id='query-headers-15'>Query Headers</h3>
+<h3 id='query-headers-10'>Query Headers</h3>
 <table><thead>
 <tr>
 <th>Header</th>
@@ -1908,7 +1355,7 @@ Remember — an APIKEY is needed to get a return value!
 <td>You need to insert your APIKEY to get results.</td>
 </tr>
 </tbody></table>
-<h3 id='url-parameters-10'>URL Parameters</h3>
+<h3 id='url-parameters-7'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
