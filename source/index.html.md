@@ -6,7 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - javascript
 
 toc_footers:
-  - Documentation for <a href='https://macabiadas.mx'>Maccabiah API</a>
+  - Documentation for <a href='https://tazuz.org'>Tazuz API</a>
   - Created by Daniel Darwich
   - Request a Developer Key with
   - ddarwichh@atid.edu.mx
@@ -20,15 +20,15 @@ search: true
 
 # Introduction
 
-Welcome to the Maccabiah API! You can use our API to access all endpoints, which can get information on sports, standings, transportation, and more in our database.
+Welcome to the Tazuz API! You can use our API to access all endpoints, which can get information on sports, standings, transportation, and more in our database.
 
 We have language bindings in C# and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Authentication
 
-Maccabiah uses API keys to allow access to the API. You can register a new Maccabiah API key at our [developer portal](http://macabiadas.mx).
+Tazuz uses API keys to allow access to the API. You can register a new Maccabiah API key at our [developer portal](http://tazuz.org).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Tazuz expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
 `Authorization: APIKEY`
 
@@ -36,7 +36,7 @@ Kittn expects for the API key to be included in all API requests to the server i
 You must replace <code>APIKEY</code> with your personal API key.
 </aside>
 
-# Maccabiah Wordpress
+# Tazuz Backend
 
 
 
@@ -52,39 +52,29 @@ You must replace <code>APIKEY</code> with your personal API key.
 
 
 
-## Get All Posts
-```csharp
-static HttpClient client = new HttpClient();
 
-public JArray GetAllPosts()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://macabiadas.mx/wp-json/wp/v2/posts");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetAllPosts();
-```
+## Get Users
 
 ```javascript
+function GetUsers() {
+  var request = new XMLHttpRequest();
+  var url = "https://tazuz-d281a.firebaseio.com/Users.json?auth=1DfXFRPwRe9OveIAnKiZUlzXaYb3rozZyHdD1OLA";
 
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var object = JSON.parse(this.responseText);
+      Users(object);
+    }
+  };
+  request.open("GET", url, true);
+  request.send();
+}
+
+function Users(object) {
+  console.log(Object.values(object));
+}
+
+GetUsers();
 ```
 
 > You must replace <code>APIKEY</code> with your personal API key.
@@ -94,621 +84,15 @@ JArray data = GetAllPosts();
 ```json
 [
   {
-    "id": 1943,
-    "date": "2018-11-01T19:46:34",
-    "date_gmt": "2018-11-01T19:46:34",
-    "guid": {
-      "rendered": "http://macabiadas.mx/?p=1943"
-    },
-    "modified": "2018-11-06T17:30:41",
-    "modified_gmt": "2018-11-06T17:30:41",
-    "slug": "5-dias-de-tour-en-la-ciudad-de-mexico",
-    "status": "publish",
-    "type": "post",
-    "link": "http://macabiadas.mx/2018/11/01/5-dias-de-tour-en-la-ciudad-de-mexico/",
-    "title": {
-      "rendered": "5 días de tour en la Ciudad de México"
-    },
-    "content": {
-      "rendered": "",
-      "protected": false
-    },
-    ...
-  },
-
-  {...}
-]
-```
-
-This endpoint retrieves all posts.
-
-### HTTP Request
-
-`GET http://macabiadas.mx/wp-json/wp/v2/posts`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-<aside class="warning">
-Remember — an APIKEY is needed to get a return value!
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get a Specific Post
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JObject GetPost()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://macabiadas.mx/wp-json/wp/v2/posts/POSTID");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JObject.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JObject data = GetPost();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>POSTID</code> with a specific Post id.
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 1943,
-  "date": "2018-11-01T19:46:34",
-  "date_gmt": "2018-11-01T19:46:34",
-  "guid": {
-    "rendered": "http://macabiadas.mx/?p=1943"
-  },
-  "modified": "2018-11-06T17:30:41",
-  "modified_gmt": "2018-11-06T17:30:41",
-  "slug": "5-dias-de-tour-en-la-ciudad-de-mexico",
-  "status": "publish",
-  "type": "post",
-  "link": "http://macabiadas.mx/2018/11/01/5-dias-de-tour-en-la-ciudad-de-mexico/",
-  "title": {
-    "rendered": "5 días de tour en la Ciudad de México"
-  },
-  "content": {
-    "rendered": "",
-    "protected": false
-  },
-  "excerpt": {
-    "rendered": "",
-    "protected": false
-  },
-  "author": 2,
-  "featured_media": 1605,
-  "comment_status": "open",
-  "ping_status": "open",
-  "sticky": false,
-  "template": "",
-  "format": "standard",
-  "meta": [],
-  "categories": [
-    29
-  ],
-  "tags": [
-    62,
-    65,
-    64,
-    63,
-    60
-  ],
-  "jetpack_featured_media_url": "http://macabiadas.mx/wp-content/uploads/2018/10/Centro-2.jpg",
-  "_links": {
-    "self": [
-      {
-        "href": "http://macabiadas.mx/wp-json/wp/v2/posts/1943"
-      }
-    ],
-    ...
-  }
-}
-```
-
-This endpoint retrieves a specific post.
-
-<aside class="warning">You need to have the specific <code>POSTID</code> in order to make this request.</aside>
-
-### HTTP Request
-
-`GET http://macabiadas.mx/wp-json/wp/v2/posts/<POSTID>`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-### URL Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-POSTID | Integer | The ID of the post you want to retrieve.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get All Tags
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetAllTags()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://macabiadas.mx/wp-json/wp/v2/tags");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetAllTags();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 9,
-    "count": 0,
-    "description": "",
-    "link": "http://macabiadas.mx/tag/about/",
-    "name": "About",
-    "slug": "about",
-    "taxonomy": "post_tag",
-    "meta": [],
-    "_links": {
-      "self": [
-        {
-          "href": "http://macabiadas.mx/wp-json/wp/v2/tags/9"
-        }
-      ],
-      ...
-    }
+    Age:18,
+    Name:"John Doe"
   },
   {
-    "id": 52,
-    "count": 1,
-    "description": "",
-    "link": "http://macabiadas.mx/tag/agua/",
-    "name": "agua",
-    "slug": "agua",
-    "taxonomy": "post_tag",
-    "meta": [],
-    "_links": {
-      "self": [
-        {
-          "href": "http://macabiadas.mx/wp-json/wp/v2/tags/52"
-        }
-      ],
-      ...
-    }
-  },
-  {...}
-]
-```
-
-This endpoint gets every available tag.
-
-### HTTP Request
-
-`GET http://macabiadas.mx/wp-json/wp/v2/tags`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Filter Posts by Tags
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetPostsWithTag()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://macabiadas.mx/wp-json/wp/v2/posts?tags=TAG");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetPostsWithTag();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>TAG</code> with a specific Tag id.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1943,
-    "date": "2018-11-01T19:46:34",
-    "date_gmt": "2018-11-01T19:46:34",
-    "guid": {
-      "rendered": "http://macabiadas.mx/?p=1943"
-    },
-    "modified": "2018-11-06T17:30:41",
-    "modified_gmt": "2018-11-06T17:30:41",
-    "slug": "5-dias-de-tour-en-la-ciudad-de-mexico",
-    "status": "publish",
-    "type": "post",
-    "link": "http://macabiadas.mx/2018/11/01/5-dias-de-tour-en-la-ciudad-de-mexico/",
-    "title": {
-      "rendered": "5 días de tour en la Ciudad de México"
-    },
-    "content": {
-      "rendered": "",
-      "protected": false
-    },
-    "excerpt": {
-      "rendered": "",
-      "protected": false
-    },
-    "author": 2,
-    "featured_media": 1605,
-    "comment_status": "open",
-    "ping_status": "open",
-    "sticky": false,
-    "template": "",
-    "format": "standard",
-    "meta": [],
-    "categories": [
-      29
-    ],
-    "tags": [
-      62,
-      65,
-      64,
-      63,
-      60,
-      61,
-      58,
-      57,
-      66,
-      33,
-      59
-    ],
-    ...
-  },
-  {...}
-]
-```
-
-This endpoint retrieves all posts with a specific tag/s.
-
-### HTTP Request
-
-To get all available tags go to <a href="http://localhost:4567/?csharp#get-all-tags">Get All Tags</a>.
-
-`GET http://macabiadas.mx/wp-json/wp/v2/posts?tags=TAG`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-### URL Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-TAG | Integer | The ID of the tag you want to filter posts by. You can use more than 1 tag by separating them with commas. Example: `http://macabiadas.mx/wp-json/wp/v2/posts?tags=62,52`
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get Sport Information
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetSportInfo()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://macabiadas.mx/wp-json/wp/v2/posts?slug=SPORT");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetSportInfo();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>SPORT</code> with a specific sport name as listed on the left.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1623,
-    "date": "2018-10-19T19:52:11",
-    "date_gmt": "2018-10-19T19:52:11",
-    "guid": {
-      "rendered": "http://macabiadas.mx/?p=1623"
-    },
-    "modified": "2018-10-19T19:52:11",
-    "modified_gmt": "2018-10-19T19:52:11",
-    "slug": "futsal",
-    "status": "publish",
-    "type": "post",
-    "link": "http://macabiadas.mx/2018/10/19/futsal/",
-    "title": {
-      "rendered": "Futsal"
-    },
-    "content": {
-      "rendered": "",
-      "protected": false
-    },
-    "excerpt": {
-      "rendered": "",
-      "protected": false
-    },
-    "author": 2,
-    "featured_media": 1628,
-    "comment_status": "open",
-    "ping_status": "open",
-    "sticky": false,
-    "template": "",
-    "format": "standard",
-    "meta": [],
-    "categories": [
-      18
-    ],
-    "tags": [
-      38,
-      43,
-      42,
-      41,
-      37,
-      40,
-      39
-    ],
-    ...
-    }
+    Age:15,
+    Name:"Jane Doe"
   }
 ]
-```
 
-This endpoint retrieves a post with information from a specific sport.
-
-### HTTP Request
-
-`GET http://macabiadas.mx/wp-json/wp/v2/posts?slug=SPORT`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-### URL Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-SPORT | String | The name of the sport you want information from. Its value can be any of the following: `Aguas-Abiertas`, `Ajedréz`, `Basquetbol`, `Ciclismo`, `Equitación`, `Fútbol-Soccer`, `Futsal`, `Gimnasia-Olímpica`, `Gimnasia-Ritmica`, `Golf`, `Hockey-Pasto`, `Karate`, `Macabiman`, `Triatlón`, `Medio-Maratón`, `Natación`, `Paddel`, `Squash`, `Softball`, `Tenis`, `Tenis-de-Mesa`, `Tiro-con-Arco`, `Voleyball`, `Voleyball-de-Playa`, `WaterPolo`
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Maccabiah Backend
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get All Countries Data
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetCountriesData()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/countries");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetCountriesData();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> The above command returns JSON structured like this:
-
-```json
 [
   {
     "id": 1,
