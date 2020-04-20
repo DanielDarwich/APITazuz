@@ -53,12 +53,12 @@ You must replace <code>APIKEY</code> with your personal API key.
 
 
 
-## Get Users
+## Get Users by University
 
 ```javascript
 function GetUsers() {
   var request = new XMLHttpRequest();
-  var url = "https://tazuz-d281a.firebaseio.com/Users.json?auth=1DfXFRPwRe9OveIAnKiZUlzXaYb3rozZyHdD1OLA";
+  var url = "https://tazuz-d281a.firebaseio.com/UNIVERSITY/Users.json?auth=APIKEY";
 
   request.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -79,173 +79,515 @@ GetUsers();
 
 > You must replace <code>APIKEY</code> with your personal API key.
 
+> You must replace <code>UNIVERSITY</code> with a universities initials.
+
+> The above command returns JSON structured like this:
+
+```json
+[
+
+{
+"Mail":"jbond@idc.com",
+"Name":"James Bond",
+"Tribes":["Soccer", "Tennis"],
+"University":"IDC"
+},
+
+{
+"Mail":"dbeckham@idc.com",
+"Name":"David Beckham",
+"Tribes":["Baseball", "Surf", "Yoga"],
+"University":"IDC"
+}
+
+]
+```
+
+This endpoint retrieves a list of all users by university containing their basic information.
+
+### HTTP Request
+
+`GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Users.json?auth=APIKEY`
+
+### URL Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+Authorization | String | You need to insert your APIKEY to get results.
+University | String | You need to insert the initials of a university to get results. (IDC, TAU)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get All Tribes in University
+
+```javascript
+function GetTribes() {
+  var request = new XMLHttpRequest();
+  var url = "https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tribes.json?auth=APIKEY";
+
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var object = JSON.parse(this.responseText);
+      Tribes(object);
+    }
+  };
+  request.open("GET", url, true);
+  request.send();
+}
+
+function Tribes(object) {
+  console.log(Object.keys(object));
+}
+
+GetTribes();
+```
+
+> You must replace <code>APIKEY</code> with your personal API key.
+
+> You must replace <code>UNIVERSITY</code> with a universities initials.
+
+> The above command returns JSON structured like this:
+
+```json
+["Soccer", "Basketball", "Yoga", "Surf"]
+```
+
+This endpoint retrieves a list of all tribes in a university.
+
+### HTTP Request
+
+`GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tribes.json?auth=APIKEY`
+
+### URL Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+Authorization | String | You need to insert your APIKEY to get results.
+University | String | You need to insert the initials of a university to get results. (IDC, TAU)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get a Specific Tribe's Information
+
+```javascript
+function GetTribe() {
+  var request = new XMLHttpRequest();
+  var url = "https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tribes/TRIBE.json?auth=APIKEY";
+
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var object = JSON.parse(this.responseText);
+      Tribe(object);
+    }
+  };
+  request.open("GET", url, true);
+  request.send();
+}
+
+function Tribe(object) {
+  console.log(object);
+}
+
+GetTribe();
+```
+
+> You must replace <code>APIKEY</code> with your personal API key.
+
+> You must replace <code>UNIVERSITY</code> with a universities initials.
+
+> You must replace <code>TRIBE</code> with a tribe's name.
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "ImageURL":"https://media2.fdncms.com/eastbayexpress/imager/u/original/17703015/soccer-ball-ss-img.jpg",
+  "Information":"The goal of this tribe is to...",
+  "Members":["Oribe Peralta", "Javier Hernandez", "Leonel Messi", "Cristiano Ronaldo"],
+  "TribeLeader":"David Beckham"
+}
+```
+
+This endpoint retrieves a information for a specific tribe in a university.
+
+### HTTP Request
+
+`GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tribes/TRIBE.json?auth=APIKEY`
+
+### URL Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+Authorization | String | You need to insert your APIKEY to get results.
+University | String | You need to insert the initials of a university to get results. (IDC, TAU)
+Tribe | String | You need to insert a Tribe's name to get results.
+
+<aside class="notice">Note: The tribe's name has to be written exactly as in the tribes list.</aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get All Events
+
+```javascript
+function GetEvents() {
+  var request = new XMLHttpRequest();
+  var url = "https://tazuz-d281a.firebaseio.com/UNIVERSITY/Events.json?auth=APIKEY";
+
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var object = JSON.parse(this.responseText);
+      Events(object);
+    }
+  };
+  request.open("GET", url, true);
+  request.send();
+}
+
+function Events(object) {
+  var newObject = new Object();
+  for (const property in object) {
+    newObject[property] = Object.values(object[property]); 
+  }
+  console.log(newObject);
+}
+
+GetEvents();
+```
+
+> You must replace <code>APIKEY</code> with your personal API key.
+
+> You must replace <code>UNIVERSITY</code> with a universities initials.
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "Basketball":[
+    {
+      "Date":"20-04-20",
+      "Time":"20:30",
+      "Title":"Friendly Match",
+      "Venue":"IDC Basketball Court",
+      "VenueID":9
+    }
+  ],
+  "Soccer":[
+    {
+      "Date":"17-04-20",
+      "Time":"09:00",
+      "Title":"Greeting Party",
+      "Venue":"IDC Patio",
+      "VenueID":7
+    },
+    {
+      "Date":"17-04-20",
+      "Time":"14:00",
+      "Title":"Friendly Match",
+      "Venue":"IDC Soccer Court",
+      "VenueID":12
+    }
+  ]
+}
+```
+
+This endpoint retrieves a list of all events in a university filtered by tribe and ordered chronologically.
+
+### HTTP Request
+
+`GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Events.json?auth=APIKEY`
+
+### URL Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+Authorization | String | You need to insert your APIKEY to get results.
+University | String | You need to insert the initials of a university to get results. (IDC, TAU)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get List of All Tournaments
+
+```javascript
+function GetTournaments() {
+  var request = new XMLHttpRequest();
+  var url = "https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments.json?auth=APIKEY";
+
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var object = JSON.parse(this.responseText);
+      Tournaments(object);
+    }
+  };
+  request.open("GET", url, true);
+  request.send();
+}
+
+function Tournaments(object) {
+  console.log(Object.keys(object));
+}
+
+GetTournaments();
+```
+
+> You must replace <code>APIKEY</code> with your personal API key.
+
+> You must replace <code>UNIVERSITY</code> with a universities initials.
+
+> The above command returns JSON structured like this:
+
+```json
+["Mens Basketball", "Soccer"]
+```
+
+This endpoint retrieves a list of all tournaments in a university.
+
+### HTTP Request
+
+`GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments.json?auth=APIKEY`
+
+### URL Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+Authorization | String | You need to insert your APIKEY to get results.
+University | String | You need to insert the initials of a university to get results. (IDC, TAU)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get a Specific Tournament's Matches
+
+```javascript
+function GetTournamentMatches() {
+  var request = new XMLHttpRequest();
+  var url = "https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments/TOURNAMENT/Matches.json?auth=APIKEY";
+
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var object = JSON.parse(this.responseText);
+      TournamentMatches(object);
+    }
+  };
+  request.open("GET", url, true);
+  request.send();
+}
+
+function TournamentMatches(object) {
+  console.log(Object.values(object));
+}
+
+GetTournamentMatches();
+```
+
+> You must replace <code>APIKEY</code> with your personal API key.
+
+> You must replace <code>UNIVERSITY</code> with a universities initials.
+
+> You must replace <code>TOURNAMENT</code> with a tournament's name.
+
 > The above command returns JSON structured like this:
 
 ```json
 [
   {
-    Age:18,
-    Name:"John Doe"
+    "Date":"19-04-20",
+    "Ended":true,
+    "Team1Name":"Mexico",
+    "Team1Score":101,
+    "Team2Name":"Colombia",
+    "Team2Score":85,
+    "Time":"21:00",
+    "Venue":"Tel Aviv Basketball Court",
+    "VenueID":3
   },
   {
-    Age:15,
-    Name:"Jane Doe"
+    "Date":"19-04-20",
+    "Ended":false,
+    "Team1Name":"Argentina",
+    "Team1Score":0,
+    "Team2Name":"Spain",
+    "Team2Score":0,
+    "Time":"22:30",
+    "Venue":"Tel Aviv Basketball Court",
+    "VenueID":3
   }
 ]
+```
 
+This endpoint retrieves a information for all matches of a tournament in a university.
+
+### HTTP Request
+
+`GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments/TOURNAMENT/Matches.json?auth=APIKEY`
+
+### URL Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+Authorization | String | You need to insert your APIKEY to get results.
+University | String | You need to insert the initials of a university to get results. (IDC, TAU)
+Tournament | String | You need to insert a Tournament's name to get results.
+
+<aside class="notice">Note: The tournaments's name has to be written exactly as in the tournaments list.</aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get a Specific Tournament's Standings
+
+```javascript
+function GetTournamentStandings() {
+  var request = new XMLHttpRequest();
+  var url = "https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments/TOURNAMENT/Standings.json?auth=APIKEY";
+
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var object = JSON.parse(this.responseText);
+      TournamentStandings(object);
+    }
+  };
+  request.open("GET", url, true);
+  request.send();
+}
+
+function TournamentStandings(object) {
+  console.log(object);
+}
+
+GetTournamentStandings();
+```
+
+> You must replace <code>APIKEY</code> with your personal API key.
+
+> You must replace <code>UNIVERSITY</code> with a universities initials.
+
+> You must replace <code>TOURNAMENT</code> with a tournament's name.
+
+> The above command returns JSON structured like this:
+
+```json
 [
   {
-    "id": 1,
-    "country": "Mexico",
-    "flag-image-url": "http://FLAGIMAGEURL.png"
+    "Name":"Mexico",
+    "Points":17,
+    "Position":1
   },
   {
-      "id": 2,
-      "country": "Australia",
-      "flag-image-url": "http://FLAGIMAGEURL.png"
+    "Name":"Colombia",
+    "Points":15,
+    "Position":2
+  },
+  {
+    "Name":"Argentina",
+    "Points":7,
+    "Position":3
+  },
+  {
+    "Name":"Spain",
+    "Points":2,
+    "Position":4
   }
-  {...}
 ]
 ```
 
-This endpoint retrieves information of all countries participating containing the sports they participate in.
+This endpoint retrieves a information for all matches of a tournament in a university.
 
 ### HTTP Request
 
-`GET http://jmp2019.com/api/v1/countries`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get All Country/Sports Data
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetCountrySportsData()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/COUNTRY");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetCountrySportsData();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>COUNTRY</code> with a specific country name.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-      "id": 5,
-      "name": "Swimming",
-      "sports-logo-url": "http://SPORTSLOGOURL.png",
-      "players": [
-      {
-          "id": 2560,
-        "Name": "John Doe",
-        "player-image-url": "http://PLAYERIMAGEURL.png",
-        "Birth Date": "15/10/2001",
-        "Nationality": "Mexico",
-        "Height": 1.85,
-        "Category": "Junior",
-        "Competitions": ["500 meter Backstroke", "100 meter Freestyle", "200 meter Breaststroke"],
-        "Gold Medals": 0,
-        "Silver Medals": 2,
-        "Bronze Medals": 1
-      },
-      {...}
-      ]
-  },
-  {
-      "id": 8,
-      "name": "Basketball",
-      "sports-logo-url": "http://SPORTSLOGOURL.png",
-      "players": [
-      {
-          "id": 2315,
-        "Name": "Jane Doe",
-        "player-image-url": "http://PLAYERIMAGEURL.png",
-        "Birth Date": "08/05/1997",
-        "Nationality": "Mexico",
-        "Height": 1.92,
-        "Category": "Open",
-        "Position": "Point Guard",
-        "Points": 20
-      },
-      {...}
-      ]
-  },
-  {...}
-]
-```
-
-This endpoint retrieves information of all players that participate in each sport for a certain country.
-
-### HTTP Request
-
-`GET http://jmp2019.com/api/v1/COUNTRY`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
+`GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments/TOURNAMENT/Standings.json?auth=APIKEY`
 
 ### URL Parameters
 
 Parameter | Type | Description
 --------- | ------- | -----------
-COUNTRY | String | The name of the country you want information from. If the country contains two words separate them with: <code>-</code>
+Authorization | String | You need to insert your APIKEY to get results.
+University | String | You need to insert the initials of a university to get results. (IDC, TAU)
+Tournament | String | You need to insert a Tournament's name to get results.
 
-<aside class="notice">Note: Player Keys and Values may vary depending on the sport.</aside>
-
-
-
-
+<aside class="notice">Note: The tournaments's name has to be written exactly as in the tournaments list.</aside>
 
 
 
@@ -258,968 +600,78 @@ COUNTRY | String | The name of the country you want information from. If the cou
 
 
 
-## Get All Sports Data
 
-```csharp
-static HttpClient client = new HttpClient();
 
-public JArray GetSportsData()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/sports");
 
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
 
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
 
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
 
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
 
-JArray data = GetSportsData();
-```
+
+
+
+
+
+## Get List of All Venues
 
 ```javascript
+function GetVenues() {
+  var request = new XMLHttpRequest();
+  var url = "https://tazuz-d281a.firebaseio.com/UNIVERSITY/Venues.json?auth=APIKEY";
 
+  request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var object = JSON.parse(this.responseText);
+      Venues(object);
+    }
+  };
+  request.open("GET", url, true);
+  request.send();
+}
+
+function Venues(object) {
+  console.log(Object.values(object));
+}
+
+GetVenues();
 ```
 
 > You must replace <code>APIKEY</code> with your personal API key.
+
+> You must replace <code>UNIVERSITY</code> with a universities initials.
 
 > The above command returns JSON structured like this:
 
 ```json
 [
   {
-    "id": 5,
-    "sport": "Swimming",
-    "sports-logo-url": "http://SPORTSLOGOURL.png"
+    "Name":"IDC Patio",
+    "lat":2.234567,
+    "lng":-99.075678
   },
   {
-      "id": 8,
-      "sport": "Basketball",
-      "sports-logo-url": "http://SPORTSLOGOURL.png"
+    "Name":"IDC Basketball Court",
+    "lat":2.234567,
+    "lng":-99.075678
+  },
+  {
+    "Name":"IDC Soccer Court",
+    "lat":2.234567,
+    "lng":-99.075678
   }
-  {...}
 ]
 ```
 
-This endpoint retrieves information of all sports in the Maccabiah containing the countries that participate in each one and the players that participate in each country.
+This endpoint retrieves a list of all venues in a university.
 
 ### HTTP Request
 
-`GET http://jmp2019.com/api/v1/sports`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get All Sport/Countries Data
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetSportCountriesData()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/SPORT");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetSportCountriesData();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>SPORT</code> with a specific sport name as listed on the left.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-      "id": 15,
-      "name": "Brazil",
-      "flag-image-url": "http://FLAGIMAGEURL.png",
-      "players": [
-      {
-          "id": 2560,
-        "Name": "John Doe",
-        "player-image-url": "http://PLAYERIMAGEURL.png",
-        "Birth Date": "15/10/2001",
-        "Nationality": "Brazil",
-        "Height": 1.85,
-        "Category": "Junior",
-        "Competitions": ["500 meter Backstroke", "100 meter Freestyle", "200 meter Breaststroke"],
-        "Gold Medals": 0,
-        "Silver Medals": 2,
-        "Bronze Medals": 1
-      },
-      {...}
-      ]
-  },
-  {
-      "id": 13,
-      "name": "Chile",
-      "flag-image-url": "http://FLAGIMAGEURL.png",
-      "players": [
-      {
-          "id": 3561,
-        "Name": "Jane Doe",
-        "player-image-url": "http://PLAYERIMAGEURL.png",
-        "Birth Date": "08/05/1997",
-        "Nationality": "Chile",
-        "Height": 1.92,
-        "Category": "Open",
-        "Competitions": ["300 meter Freestyle", "200 meter Breaststroke"],
-        "Gold Medals": 3,
-        "Silver Medals": 0,
-        "Bronze Medals": 0
-      },
-      {...}
-      ]
-  },
-  {...}
-]
-```
-
-This endpoint retrieves information of all players that participate in each country for a certain sport.
-
-### HTTP Request
-
-`GET http://jmp2019.com/api/v1/SPORT`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
+`GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Venues.json?auth=APIKEY`
 
 ### URL Parameters
 
 Parameter | Type | Description
 --------- | ------- | -----------
-SPORT | String | The name of the sport you want the standings of. Its value can be any of the following: `Open-Waters`, `Chess`, `Basketball`, `Cycling`, `Horse-Riding`, `Soccer`, `Futsal`, `Olimpic-Gymnastics`, `Rhythmic-Gymnastics`, `Golf`, `Field-Hockey`, `Karate`, `Macabiman`, `Triathlon`, `Half-Marathon`, `Swimming`, `Paddle`, `Squash`, `Softball`, `Tenis`, `Table-Tenis`, `Archery`, `Volleyball`, `Beach-Volleyball`, `Water-Polo`
+Authorization | String | You need to insert your APIKEY to get results.
+University | String | You need to insert the initials of a university to get results. (IDC, TAU)
 
-<aside class="notice">Note: Player Keys and Values may vary depending on the sport.</aside>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get List of Competitions by Sport
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetListOfCompetitions()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/SPORT/competitions");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetListOfCompetitions();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>SPORT</code> with a specific sport name as listed on the left.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 256,
-    "name": "500 meter Breaststroke",
-    "sport": "Swimming"
-  },
-  {
-    "id": 257,
-    "name": "300 meter Freestyle",
-    "sport": "Swimming"
-  }
-  {...}
-]
-```
-
-This endpoint retrieves a list of all competitions inside a certain sport.
-
-### HTTP Request
-
-`GET http://jmp2019.com/api/v1/SPORT/competitions`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-### URL Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-SPORT | String | The name of the sport you want the standings of. Its value can be any of the following: `Open-Waters`, `Chess`, `Basketball`, `Cycling`, `Horse-Riding`, `Soccer`, `Futsal`, `Olimpic-Gymnastics`, `Rhythmic-Gymnastics`, `Golf`, `Field-Hockey`, `Karate`, `Macabiman`, `Triathlon`, `Half-Marathon`, `Swimming`, `Paddle`, `Squash`, `Softball`, `Tenis`, `Table-Tenis`, `Archery`, `Volleyball`, `Beach-Volleyball`, `Water-Polo`
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get Standings for a Competition
-
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetCompetitionStandings()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/standings/COMPETITION");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetCompetitionStandings();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>COMPETITION</code> with a specific competition name.
-
-> The above command returns JSON structured like this:
-
-> Swimming-300 meter Freestyle:
-
-```json
-[
-  {
-    "id": 155,
-    "position": 1,
-    "name": "John Doe",
-    "country-short": "CAN",
-    "image-url": "http://IMAGEURL.png",
-    "stats": {
-          "Heat 1": "2:57",
-          "Heat 2": "1:32",
-          "Heat 3": "1:45",
-          "Total": "6:14"
-    }
-  },
-  {
-    "id": 172,
-    "position": 2,
-    "name": "Jane Doe",
-    "country-short": "VEN",
-    "image-url": "http://IMAGEURL.png",
-    "stats": {
-          "Heat 1": "2:41",
-          "Heat 2": "2:02",
-          "Heat 3": "1:55",
-          "Total": "6:38"
-    }
-  },
-  {...}
-]
-```
-
-> Basketball Open:
-```json
-[
-  {
-    "id": 155,
-    "position": 1
-    "name": "Canada",
-    "country-short": "CAN",
-    "image-url": "http://IMAGEURL.png,
-    "stats": {
-        "W-L": "32-6",
-        "%": "0.842",
-        "PF": "113.5",
-        "PA": "107.5"
-    }
-  },
-  {
-    "id": 172,
-    "position": 2
-    "name": "Venezuela",
-    "country-short": "VEN",
-    "image-url": "http://IMAGEURL.png,
-    "stats": {
-        "W-L": "20-18",
-        "%": "0.526",
-        "PF": "109.0",
-        "PA": "109.0"
-    }
-  },
-  {...}
-]
-```
-
-This endpoint retrieves the standings of a specific competition.
-
-### HTTP Request
-
-`GET http://jmp2019.com/api/v1/standings/COMPETITION`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-### URL Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-COMPETITION | Integer | The ID of the competition you want the standings of.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Get All Medals by Country
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetAllMedals()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/medals");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetAllMedals();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 5,
-    "position": 1,
-    "name": "Mexico",
-    "flag-image-url": "http://FLAGIMAGEURL.png",
-    "gold": 9,
-    "silver": 12,
-    "bronze" 5
-  },
-  {
-      "id": 8,
-      "position": 2,
-      "name": "Argentina",
-      "flag-image-url": "http://FLAGIMAGEURL.png",
-      "gold": 7,
-    "silver": 7,
-    "bronze" 0
-  },
-  {
-      "id": 10,
-      "position": 3,
-      "name": "Brazil",
-      "flag-image-url": "http://FLAGIMAGEURL.png",
-      "gold": 4,
-    "silver": 9,
-    "bronze" 2
-  },
-  {...}
-]
-```
-
-This endpoint retrieves the table of all medals earned by each country in the Maccabiah sorted by most gold medals.
-
-### HTTP Request
-
-`GET http://jmp2019.com/api/v1/medals`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-
-
-
-
-
-
-
-
-
-
-
-## Get Medals by Country on a Sport
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetMedalsSport()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/medals/SPORT");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetMedalsSport();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>SPORT</code> with a specific sport name as listed on the left.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 5,
-    "position": 1,
-    "name": "Mexico",
-    "flag-image-url": "http://FLAGIMAGEURL.png",
-    "gold": 9,
-    "silver": 12,
-    "bronze" 5
-  },
-  {
-      "id": 8,
-      "position": 2,
-      "name": "Argentina",
-      "flag-image-url": "http://FLAGIMAGEURL.png",
-      "gold": 7,
-    "silver": 7,
-    "bronze" 0
-  },
-  {
-      "id": 10,
-      "position": 3,
-      "name": "Brazil",
-      "flag-image-url": "http://FLAGIMAGEURL.png",
-      "gold": 4,
-    "silver": 9,
-    "bronze" 2
-  },
-  {...}
-]
-```
-
-This endpoint retrieves the table of all medals earned by each country in the Maccabiah sorted by most gold medals filtered by a specific sport.
-
-### HTTP Request
-
-`GET http://jmp2019.com/api/v1/medals/SPORT`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-### URL Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-SPORT | String | The name of the sport you want the medals of. Its value can be any of the following: `Open-Waters`, `Chess`, `Basketball`, `Cycling`, `Horse-Riding`, `Soccer`, `Futsal`, `Olimpic-Gymnastics`, `Rhythmic-Gymnastics`, `Golf`, `Field-Hockey`, `Karate`, `Macabiman`, `Triathlon`, `Half-Marathon`, `Swimming`, `Paddle`, `Squash`, `Softball`, `Tenis`, `Table-Tenis`, `Archery`, `Volleyball`, `Beach-Volleyball`, `Water-Polo`
-
-
-
-
-
-
-
-
-
-
-
-## Get Medals by Sport on a Country
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetMedalsCountry()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/medals/COUNTRY");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetMedalsCountry();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>COUNTRY</code> with a specific country name.
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 5,
-    "position": 1,
-    "name": "Swimming",
-    "flag-image-url": "http://FLAGIMAGEURL.png",
-    "gold": 9,
-    "silver": 12,
-    "bronze" 5
-  },
-  {
-      "id": 8,
-      "position": 2,
-      "name": "Golf",
-      "flag-image-url": "http://FLAGIMAGEURL.png",
-      "gold": 7,
-    "silver": 7,
-    "bronze" 0
-  },
-  {
-      "id": 10,
-      "position": 3,
-      "name": "Volleyball",
-      "flag-image-url": "http://FLAGIMAGEURL.png",
-      "gold": 4,
-    "silver": 9,
-    "bronze" 2
-  },
-  {...}
-]
-```
-
-This endpoint retrieves the table of all medals earned on different sports by a country in the Maccabiah sorted by most gold medals.
-
-### HTTP Request
-
-`GET http://jmp2019.com/api/v1/medals/COUNTRY`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-### URL Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-COUNTRY | String | The name of the country you want the medals of.
-
-## Get Schedule and Results by Country
-
-```csharp
-static HttpClient client = new HttpClient();
-
-public JArray GetScheduleCountry()
-{
-    HttpWebRequest response = (HttpWebRequest)WebRequest.Create("http://jmp2019.com/api/v1/medals/COUNTRY");
-
-    response.UseDefaultCredentials = true;
-    response.Headers.Add("Authorization", "APIKEY");
-
-    HttpWebResponse answer = (HttpWebResponse)response.GetResponse();
-
-    if (answer.StatusCode == HttpStatusCode.OK)
-    {
-        Stream value = answer.GetResponseStream();
-        StreamReader _value = new StreamReader(value);
-        if (value == null)
-        {
-            Console.WriteLine("Api Value Is Null");
-        }
-
-        var data = JArray.Parse(_value.ReadToEnd());
-        return data;
-    }
-    return null;
-}
-
-JArray data = GetScheduleCountry();
-```
-
-```javascript
-
-```
-
-> You must replace <code>APIKEY</code> with your personal API key.
-
-> You must replace <code>COUNTRY</code> with a specific country name.
-
-> The above command returns JSON structured like this:
-
-
-> Type 0 Event
-
-```json
-{
-  "Day 1": [
-    {
-      "type": 0,
-      "name": "Opening Ceremony",
-      "description": "This is the description of the opening ceremony.",
-      "time": "6:00pm",
-      "venue": "CDI",
-      "image": "http://IMAGEURL.png"
-    }
-  ]
-}
-```
-
-> Type 1 Event
-
-```json
-{
-  "Day 5": [
-    {
-      "type": 1,
-      "data": {
-        "sport": "Basketball",
-        "category": "Masters",
-        "venue": "CDI",
-        "team1Name": "México",
-        "team2Name": "Canada",
-        "flag1-image-url": "http://FLAGIMAGEURL.png",
-        "flag2-image-url": "http://FLAGIMAGEURL.png",
-        "time": "6:00pm"
-      },
-      "results": {
-        "state": "Final",
-        "team1Points": 87,
-        "team2Points": 95
-      }
-    }
-  ]
-}
-```
-
-> Type 2 Event
-
-```json
-{
-  "Day 12": [
-    {
-      "type": 1,
-      "data": {
-        "sport": "Karate",
-        "category": "Masters",
-        "venue": "CDI",
-        "team1Name": "México",
-        "team2Name": "Canada",
-        "team1PlayerName": "John Doe",
-        "team2PlayerName": "Jane Doe",
-        "flag1-image-url": "http://FLAGIMAGEURL.png",
-        "flag2-image-url": "http://FLAGIMAGEURL.png",
-        "time": "6:00pm"
-      },
-      "results": {
-        "state": "Final",
-        "team1Points": 87,
-        "team2Points": 95
-      }
-    }
-  ]
-}
-```
-
-> Type 3 Event
-
-```json
-{
-  "Day 2": [
-    {
-      "type": 1,
-      "data": {
-        "sport": "Volleyball",
-        "category": "Masters",
-        "venue": "CDI",
-        "team1Name": "México",
-        "team2Name": "Canada",
-        "flag1-image-url": "http://FLAGIMAGEURL.png",
-        "flag2-image-url": "http://FLAGIMAGEURL.png",
-        "time": "6:00pm"
-      },
-      "results": {
-        "state": "Final",
-        resultsPDF: "http://PDFFILENAME.png"
-      }
-    }
-  ]
-}
-```
-
-> Type 4 Event
-
-```json
-{
-  "Day 7": [
-    {
-      "type": 1,
-      "data": {
-        "sport": "Tennis",
-        "category": "Masters",
-        "venue": "CDI",
-        "team1Name": "México",
-        "team2Name": "Canada",
-        "team1PlayerName": "John Doe",
-        "team2PlayerName": "Jane Doe",
-        "flag1-image-url": "http://FLAGIMAGEURL.png",
-        "flag2-image-url": "http://FLAGIMAGEURL.png",
-        "time": "6:00pm"
-      },
-      "results": {
-        "state": "Final",
-        resultsPDF: "http://PDFFILENAME.png"
-      }
-    }
-  ]
-}
-```
-
-> Type 5 Event
-
-```json
-{
-  "Day 11": [
-    {
-      "type": 1,
-      "data": {
-        "sport": "Tennis",
-        "category": "Masters",
-        "venue": "CDI",
-        "competitors": [{"name": "John Doe", "country": "México"}, {"name": "Jane Doe", "country": "Canada"}, {...}],
-        "time": "6:00pm"
-      },
-      "results": {
-        "state": "Final",
-        "resultsPDF": "http://PDFFILENAME.png"
-      }
-    }
-  ]
-}
-```
-
-This endpoint retrieves the schedule with events and results of every different sport for a country in the Maccabiah sorted by most gold medals. Events will be ordered chronologically.
-
-### HTTP Request
-
-`GET http://jmp2019.com/api/v1/medals/COUNTRY`
-
-### Query Headers
-
-Header | Default | Description
---------- | ------- | -----------
-Authorization | null | You need to insert your APIKEY to get results.
-
-### URL Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-COUNTRY | String | The name of the country you want the schedule of.
-
-### Types of events on JSON response
-
-Events will have a `Type` which will determine what parameters are in it. Events of different types will be combined in the same response ordered chronologically
-
-Type | Usage | Description
---------- | ------- | -----------
-`0` | `General events` | This result is returned when an important event is added to the calendar. Example: Opening Ceremony, Closing Party
-`1` | Sport with `2 Teams` and `Score Result` | This result is returned when the sport has two teams and the result is only one `String` value for each team. Example: Soccer, Basketball
-`2` | Sport with `2 Teams`, `Score Result`, and `Player Names` | This result is returned when the sport is played 1 vs 1, has two teams, and the result is only one `String` value for each team. Example: Chess, Karate
-`3` | Sport with `2 Teams` and `Complex Result` | This result is returned when the sport has two teams and the result is more complex. It will contain a special PDF displaying the results. Example: Volleyball
-`4` | Sport with `2 Teams`, `Complex Result`, and `Player Names` | This result is returned when the sport is played 1 vs 1, has two teams, and the result is more complex. It will contain a special PDF displaying the results. Example: Tennis
-`5` | Sport with `Multiple competitors` | This result is returned when the sport has many competitors. It will contain a special PDF displaying the results. Example: Swimming, Marathon
-
-## Get Schedule and Results by Sport
-
-## Get All Venues
-
-## Get Live Streams Data
-
-## Athlete Central
-
-## Partners And Sponsors
-
-## Contact
