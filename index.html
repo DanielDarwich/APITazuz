@@ -240,6 +240,15 @@
                   <li>
                     <a href="#get-all-events" class="toc-h2 toc-link" data-title="Get All Events">Get All Events</a>
                   </li>
+                  <li>
+                    <a href="#get-list-of-all-tournaments" class="toc-h2 toc-link" data-title="Get List of All Tournaments">Get List of All Tournaments</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-specific-tournament-39-s-matches" class="toc-h2 toc-link" data-title="Get a Specific Tournament's Matches">Get a Specific Tournament's Matches</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-specific-tournament-39-s-standings" class="toc-h2 toc-link" data-title="Get a Specific Tournament's Standings">Get a Specific Tournament's Standings</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -452,7 +461,7 @@ You must replace <code>APIKEY</code> with your personal API key.
 </tr>
 </tbody></table>
 
-<aside class="notice">Note: The tribe's name has to be written exactly as in the tribes list. If it contains two or more words write it the following way: "ExampleExample"</aside>
+<aside class="notice">Note: The tribe's name has to be written exactly as in the tribes list.</aside>
 <h2 id='get-all-events'>Get All Events</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">function</span> <span class="nx">GetEvents</span><span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
   <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://tazuz-d281a.firebaseio.com/UNIVERSITY/Events.json?auth=APIKEY"</span><span class="p">;</span>
@@ -534,6 +543,221 @@ You must replace <code>APIKEY</code> with your personal API key.
 <td>You need to insert the initials of a university to get results. (IDC, TAU)</td>
 </tr>
 </tbody></table>
+<h2 id='get-list-of-all-tournaments'>Get List of All Tournaments</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">function</span> <span class="nx">GetTournaments</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments.json?auth=APIKEY"</span><span class="p">;</span>
+
+  <span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+      <span class="nx">Tournaments</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">Tournaments</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">object</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nx">GetTournaments</span><span class="p">();</span>
+</code></pre>
+<blockquote>
+<p>You must replace <code>APIKEY</code> with your personal API key.</p>
+
+<p>You must replace <code>UNIVERSITY</code> with a universities initials.</p>
+
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="s2">"Mens Basketball"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Soccer"</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a list of all tournaments in a university.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments.json?auth=APIKEY</code></p>
+<h3 id='url-parameters-5'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Authorization</td>
+<td>String</td>
+<td>You need to insert your APIKEY to get results.</td>
+</tr>
+<tr>
+<td>University</td>
+<td>String</td>
+<td>You need to insert the initials of a university to get results. (IDC, TAU)</td>
+</tr>
+</tbody></table>
+<h2 id='get-a-specific-tournament-39-s-matches'>Get a Specific Tournament&#39;s Matches</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">function</span> <span class="nx">GetTournamentMatches</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments/TOURNAMENT/Matches.json?auth=APIKEY"</span><span class="p">;</span>
+
+  <span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+      <span class="nx">TournamentMatches</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">TournamentMatches</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">values</span><span class="p">(</span><span class="nx">object</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nx">GetTournamentMatches</span><span class="p">();</span>
+</code></pre>
+<blockquote>
+<p>You must replace <code>APIKEY</code> with your personal API key.</p>
+
+<p>You must replace <code>UNIVERSITY</code> with a universities initials.</p>
+
+<p>You must replace <code>TOURNAMENT</code> with a tournament&#39;s name.</p>
+
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"Date"</span><span class="p">:</span><span class="s2">"19-04-20"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Ended"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Team1Name"</span><span class="p">:</span><span class="s2">"Mexico"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Team1Score"</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Team2Name"</span><span class="p">:</span><span class="s2">"Colombia"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Team2Score"</span><span class="p">:</span><span class="mi">85</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Time"</span><span class="p">:</span><span class="s2">"21:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Venue"</span><span class="p">:</span><span class="s2">"Tel Aviv Basketball Court"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"VenueID"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"Date"</span><span class="p">:</span><span class="s2">"19-04-20"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Ended"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Team1Name"</span><span class="p">:</span><span class="s2">"Argentina"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Team1Score"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Team2Name"</span><span class="p">:</span><span class="s2">"Spain"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Team2Score"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Time"</span><span class="p">:</span><span class="s2">"22:30"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Venue"</span><span class="p">:</span><span class="s2">"Tel Aviv Basketball Court"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"VenueID"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a information for all matches of a tournament in a university.</p>
+<h3 id='http-request-6'>HTTP Request</h3>
+<p><code>GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments/TOURNAMENT/Matches.json?auth=APIKEY</code></p>
+<h3 id='url-parameters-6'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Authorization</td>
+<td>String</td>
+<td>You need to insert your APIKEY to get results.</td>
+</tr>
+<tr>
+<td>University</td>
+<td>String</td>
+<td>You need to insert the initials of a university to get results. (IDC, TAU)</td>
+</tr>
+<tr>
+<td>Tournament</td>
+<td>String</td>
+<td>You need to insert a Tournament&#39;s name to get results.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">Note: The tournaments's name has to be written exactly as in the tournaments list.</aside>
+<h2 id='get-a-specific-tournament-39-s-standings'>Get a Specific Tournament&#39;s Standings</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">function</span> <span class="nx">GetTournamentStandings</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments/TOURNAMENT/Standings.json?auth=APIKEY"</span><span class="p">;</span>
+
+  <span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+      <span class="nx">TournamentStandings</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">TournamentStandings</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">GetTournamentStandings</span><span class="p">();</span>
+</code></pre>
+<blockquote>
+<p>You must replace <code>APIKEY</code> with your personal API key.</p>
+
+<p>You must replace <code>UNIVERSITY</code> with a universities initials.</p>
+
+<p>You must replace <code>TOURNAMENT</code> with a tournament&#39;s name.</p>
+
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"Name"</span><span class="p">:</span><span class="s2">"Mexico"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Points"</span><span class="p">:</span><span class="mi">17</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Position"</span><span class="p">:</span><span class="mi">1</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"Name"</span><span class="p">:</span><span class="s2">"Colombia"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Points"</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Position"</span><span class="p">:</span><span class="mi">2</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"Name"</span><span class="p">:</span><span class="s2">"Argentina"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Points"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Position"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"Name"</span><span class="p">:</span><span class="s2">"Spain"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Points"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Position"</span><span class="p">:</span><span class="mi">4</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a information for all matches of a tournament in a university.</p>
+<h3 id='http-request-7'>HTTP Request</h3>
+<p><code>GET https://tazuz-d281a.firebaseio.com/UNIVERSITY/Tournaments/TOURNAMENT/Standings.json?auth=APIKEY</code></p>
+<h3 id='url-parameters-7'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Authorization</td>
+<td>String</td>
+<td>You need to insert your APIKEY to get results.</td>
+</tr>
+<tr>
+<td>University</td>
+<td>String</td>
+<td>You need to insert the initials of a university to get results. (IDC, TAU)</td>
+</tr>
+<tr>
+<td>Tournament</td>
+<td>String</td>
+<td>You need to insert a Tournament&#39;s name to get results.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">Note: The tournaments's name has to be written exactly as in the tournaments list.</aside>
 <h1 id='errors'>Errors</h1>
 <p>The Tazuz API uses the following error codes:</p>
 
