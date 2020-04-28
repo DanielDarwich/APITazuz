@@ -2,8 +2,8 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - csharp: C#
   - javascript
+//  - csharp: C#
 
 toc_footers:
   - Documentation for <a href='https://tazuz.org'>Tazuz API</a>
